@@ -18,9 +18,7 @@ This project uses the following dependencies:
 
 ---
 
-## ⚡ Installation & Setup  
 
-Follow these steps to set up the project locally:  
 
 ##  🛠 Technologies Used
 
@@ -45,6 +43,11 @@ Backend:
   - SweetAlert2 for Confirmation Dialogs
   - REST API Integration with Axios
   - Smooth User Experience with Instant Updates
+
+
+  ## ⚡ Installation & Setup  
+
+Follow these steps to set up the project locally:  
 
 
 
