@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const ManageTask = () => {
   const [tasks, setTasks] = useState([]);
@@ -53,17 +55,32 @@ const ManageTask = () => {
     }
   };
 
-  // Delete Task
-  const handleDelete = async (id) => {
-    // if (!window.confirm("Are you sure you want to delete this task?")) return;
+ 
 
+const handleDelete = async (id) => {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+  });
+
+  if (result.isConfirmed) {
     try {
       await axios.delete(`http://localhost:3000/tasks/${id}`);
-      setTasks(tasks.filter((task) => task._id !== id));
+      setTasks((tasks) => tasks.filter((task) => task._id !== id));
+
+      Swal.fire("Deleted!", "Your task has been deleted.", "success");
     } catch (error) {
       console.error("Error deleting task:", error);
+      Swal.fire("Error!", "Failed to delete the task.", "error");
     }
-  };
+  }
+};
+
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -80,7 +97,7 @@ const ManageTask = () => {
               <th className="p-3">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {tasks.map((task) => (
               <tr
                 key={task._id}
@@ -106,7 +123,7 @@ const ManageTask = () => {
                   </select>
                 </td>
                 <td className="p-3 flex space-x-2">
-                  <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Edit</button>
+                  <Link to={`/edittask/${task._id}`} className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Edit</Link>
                   <button onClick={() => handleDelete(task._id)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
                 </td>
               </tr>

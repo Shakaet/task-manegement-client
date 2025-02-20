@@ -1,50 +1,48 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
-const AddTask = () => {
-
-    let nav= useNavigate()
+export const EditTask = () => {
   const [task, setTask] = useState({
     title: "",
     description: "",
     category: "To-Do",
   });
 
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  // Fetch the existing task data
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/task/${id}`)
+      .then((response) => setTask(response.data))
+      .catch((error) => console.error("Error fetching task:", error));
+  }, [id]);
+
+  // Handle input change
   const handleChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newTask = {
-      ...task,
-      timestamp: new Date().toISOString(), // Auto-generated timestamp
-    };
-    // console.log(newTask)
-
     try {
-      const response = await axios.post("http://localhost:3000/addtask", newTask);
-      console.log("Task Added:", response.data);
-      Swal.fire({
-        title: "Task added Successfully!",
-        icon: "success",
-        draggable: true
-      });
-      setTask({ title: "", description: "", category: "To-Do" }); // Reset form
-      nav("/managetask")
-
+      await axios.put(`http://localhost:3000/task/${id}`, task);
+      Swal.fire("Success!", "Task updated successfully.", "success");
+      navigate("/managetask"); 
     } catch (error) {
-      console.error("Error adding task:", error);
-      alert("Failed to add task.");
+      console.error("Error updating task:", error);
+      Swal.fire("Error!", "Failed to update task.", "error");
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Add New Task</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Edit This Task</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title */}
           <div>
@@ -89,17 +87,15 @@ const AddTask = () => {
             </select>
           </div>
 
-          {/* Add Task Button */}
+          {/* Update Task Button */}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
           >
-            Add Task
+            Update Task
           </button>
         </form>
       </div>
     </div>
   );
 };
-
-export default AddTask;

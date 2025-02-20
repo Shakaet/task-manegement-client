@@ -13,6 +13,7 @@ import PrivateRoute from './component/PrivateRoute.jsx';
 import AddTask from './component/AddTask.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ManageTask from './component/ManageTask.jsx';
+import { EditTask } from './component/EditTask.jsx';
 
 
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/addtask",
         element: <PrivateRoute><AddTask></AddTask></PrivateRoute>,
+      },
+      {
+        path: "/edittask/:id",
+        element: <PrivateRoute><EditTask></EditTask></PrivateRoute>,
       }
      
       
