@@ -11,7 +11,7 @@ const ManageTask = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/alltask");
+        const response = await axios.get("https://react-task-management-server-steel.vercel.app/alltask");
         setTasks(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -37,7 +37,7 @@ const ManageTask = () => {
       // Update the category in the database
       const updatedTask = { category: newCategory };
       const response = await axios.patch(
-        `http://localhost:3000/tasks/${id}`,
+        `https://react-task-management-server-steel.vercel.app/tasks/${id}`,
         updatedTask
       );
   
@@ -70,7 +70,7 @@ const handleDelete = async (id) => {
 
   if (result.isConfirmed) {
     try {
-      await axios.delete(`http://localhost:3000/tasks/${id}`);
+      await axios.delete(`https://react-task-management-server-steel.vercel.app/tasks/${id}`);
       setTasks((tasks) => tasks.filter((task) => task._id !== id));
 
       Swal.fire("Deleted!", "Your task has been deleted.", "success");

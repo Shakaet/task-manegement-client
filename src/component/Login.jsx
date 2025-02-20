@@ -22,7 +22,7 @@ export const Login = () => {
                 email:user?.email,
 
             }
-            axios.post("http://localhost:3000/addUser",usersData)
+            axios.post("https://react-task-management-server-steel.vercel.app/addUser",usersData)
             .then((res)=>{
                 if(res.data.insertedId){
                     // alert("user added")

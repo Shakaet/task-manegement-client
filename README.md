@@ -1,9 +1,9 @@
 # 📝 Task Manager App
 
-A simple and intuitive Task Manager app to help you organize your tasks efficiently. 🏆  
+The Task Manager App is a simple and efficient tool for creating, editing, deleting, and organizing tasks. Built with React, Tailwind CSS, and Axios, it provides a smooth and responsive user experience. It includes features like SweetAlert2 confirmations, real-time updates, and REST API integration.
 
 ## 🚀 Live Demo  
-🔗 [Live App](https://your-live-link.com)  
+🔗 [Live App](https://jocular-shortbread-ada2eb.netlify.app/)  
 
 ---
 
