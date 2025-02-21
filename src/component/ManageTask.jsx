@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthProvider";
 
 const ManageTask = () => {
+
+  let {user}= useContext(AuthContext)
   const [tasks, setTasks] = useState([]);
   const [draggedTask, setDraggedTask] = useState(null);
 
@@ -11,14 +14,14 @@ const ManageTask = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get("https://react-task-management-server-steel.vercel.app/alltask");
+        const response = await axios.get(`https://react-task-management-server-steel.vercel.app/alltask/${user?.email}`);
         setTasks(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
     };
     fetchTasks();
-  }, []);
+  }, [user?.email]);
 
   // Handle Drag Start
   const handleDragStart = (task) => {

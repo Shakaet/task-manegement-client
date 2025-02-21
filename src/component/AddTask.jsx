@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthProvider";
 
 const AddTask = () => {
+
+  let {user}= useContext(AuthContext)
 
     let nav= useNavigate()
   const [task, setTask] = useState({
@@ -21,6 +24,7 @@ const AddTask = () => {
     const newTask = {
       ...task,
       timestamp: new Date().toISOString(), // Auto-generated timestamp
+      email:user?.email
     };
     // console.log(newTask)
 
